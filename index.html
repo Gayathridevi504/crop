@@ -1,0 +1,690 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AgriPulse | Smart Crop Disease & Plant Health Monitor</title>
+  <meta name="description" content="A modern smart crop disease detector and real-time plant health telemetry dashboard for precision agriculture.">
+  
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  
+  <!-- Remix Icons CDN -->
+  <link href="https://cdn.jsdelivr.net/npm/remixicon@4.2.0/fonts/remixicon.css" rel="stylesheet">
+  
+  <!-- Chart.js CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.2/dist/chart.umd.min.js"></script>
+
+  <!-- Custom CSS -->
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- Navigation Bar -->
+  <header class="navbar" id="navbar">
+    <div class="nav-container">
+      <a href="#home" class="logo">
+        <div class="logo-icon">
+          <i class="ri-leaf-fill"></i>
+        </div>
+        <div class="logo-text">
+          <span class="brand-name">Agri<span class="brand-highlight">Pulse</span></span>
+          <span class="brand-sub">Smart Crop Monitor</span>
+        </div>
+      </a>
+
+      <nav class="nav-menu" id="navMenu">
+        <ul class="nav-list">
+          <li><a href="#home" class="nav-link active"><i class="ri-home-5-line"></i> Home</a></li>
+          <li><a href="#dashboard" class="nav-link"><i class="ri-dashboard-3-line"></i> Dashboard</a></li>
+          <li><a href="#ai-scanner" class="nav-link"><i class="ri-scan-2-line"></i> Disease Scanner</a></li>
+          <li><a href="#charts-section" class="nav-link"><i class="ri-line-chart-line"></i> Analytics</a></li>
+          <li><a href="#history-section" class="nav-link"><i class="ri-history-line"></i> Scan Log</a></li>
+        </ul>
+      </nav>
+
+      <div class="nav-actions">
+        <div class="telemetry-badge pulse-anim" id="telemetryBadge" title="Live Telemetry Status">
+          <span class="dot"></span>
+          <span class="badge-text">Telemetry: Live</span>
+        </div>
+        <button class="theme-toggle-btn" id="themeToggle" aria-label="Toggle Dark/Light Mode" title="Toggle Theme">
+          <i class="ri-moon-line" id="themeIcon"></i>
+        </button>
+        <button class="mobile-toggle-btn" id="mobileMenuBtn" aria-label="Open Navigation Menu">
+          <i class="ri-menu-4-line"></i>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+      <div class="hero-bg-shapes">
+        <div class="shape shape-1"></div>
+        <div class="shape shape-2"></div>
+      </div>
+      <div class="container hero-container">
+        <div class="hero-content">
+          <div class="hero-badge">
+            <i class="ri-sparkling-fill"></i>
+            <span>Precision Agriculture & AI Crop Care</span>
+          </div>
+          <h1 class="hero-title">
+            Smart Crop Health & <br>
+            <span class="gradient-text">Instant Disease Diagnosis</span>
+          </h1>
+          <p class="hero-description">
+            Empower your farming with real-time environmental telemetry, soil monitoring, and instant neural-powered crop leaf disease identification. Protect yields before damage spreads.
+          </p>
+          
+          <div class="hero-cta-group">
+            <a href="#ai-scanner" class="btn btn-primary">
+              <i class="ri-scan-2-line"></i> Diagnose Leaf Now
+            </a>
+            <a href="#dashboard" class="btn btn-secondary">
+              <i class="ri-dashboard-line"></i> View Live Sensors
+            </a>
+          </div>
+
+          <div class="hero-stats-grid">
+            <div class="stat-item">
+              <span class="stat-number" id="statAccuracy">98.6%</span>
+              <span class="stat-label">Model Accuracy</span>
+            </div>
+            <div class="stat-divider"></div>
+            <div class="stat-item">
+              <span class="stat-number">4+</span>
+              <span class="stat-label">Sensor Streams</span>
+            </div>
+            <div class="stat-divider"></div>
+            <div class="stat-item">
+              <span class="stat-number">&lt; 1.2s</span>
+              <span class="stat-label">Scan Response</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="hero-visual">
+          <div class="hero-card-preview glass-card">
+            <div class="preview-header">
+              <div class="preview-tag"><i class="ri-shield-check-line"></i> Field Station #04</div>
+              <span class="live-pill"><span class="blink-dot"></span> Active</span>
+            </div>
+            <div class="preview-plant-img">
+              <img src="https://images.unsplash.com/photo-1592417817098-8f3d69106a49?auto=format&fit=crop&w=700&q=80" alt="Healthy tomato leaf crop" class="hero-img" loading="lazy">
+              <div class="scan-overlay-line"></div>
+              <div class="scan-marker marker-1"><i class="ri-focus-3-line"></i> <span>Tissue: Healthy</span></div>
+              <div class="scan-marker marker-2"><i class="ri-drop-line"></i> <span>Turgor: 94%</span></div>
+            </div>
+            <div class="preview-footer">
+              <div class="preview-status">
+                <span class="status-indicator status-optimal"></span>
+                <div>
+                  <h4>Crop Status: Thriving</h4>
+                  <p>Tomato Field B &bull; Zone 2</p>
+                </div>
+              </div>
+              <div class="preview-score">
+                <span class="score-num">94</span>
+                <span class="score-max">/100</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Dashboard & Telemetry Section -->
+    <section class="dashboard-section" id="dashboard">
+      <div class="container">
+        <div class="section-header">
+          <div class="section-badge"><i class="ri-temp-hot-line"></i> Telemetry & Soil Health</div>
+          <h2 class="section-title">Plant Health & Field Telemetry</h2>
+          <p class="section-subtitle">Real-time microclimate sensors and soil condition metrics for greenhouse & open field plots.</p>
+          
+          <div class="telemetry-controls">
+            <button class="btn-sm btn-ghost" id="refreshSensorsBtn" title="Fetch latest sensor readings">
+              <i class="ri-refresh-line"></i> Simulate Live Updates
+            </button>
+            <span class="last-sync-text" id="lastSyncTime">Last updated: Just now</span>
+          </div>
+        </div>
+
+        <!-- Sensor Metric Cards Grid -->
+        <div class="sensor-grid">
+          
+          <!-- Temperature Card -->
+          <div class="sensor-card glass-card" id="cardTemp">
+            <div class="sensor-header">
+              <div class="sensor-icon-wrap icon-temp">
+                <i class="ri-temp-hot-line"></i>
+              </div>
+              <span class="status-pill pill-success" id="tempStatus">Optimal</span>
+            </div>
+            <div class="sensor-body">
+              <span class="sensor-label">Ambient Temperature</span>
+              <div class="sensor-reading">
+                <span class="metric-value" id="valTemp">24.5</span>
+                <span class="metric-unit">°C</span>
+              </div>
+              <div class="sensor-range-bar">
+                <div class="bar-fill bar-temp" id="fillTemp" style="width: 58%;"></div>
+              </div>
+              <div class="range-labels">
+                <span>Ideal: 20°C - 28°C</span>
+                <span class="trend up"><i class="ri-arrow-up-s-line"></i> +0.3°C</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Humidity Card -->
+          <div class="sensor-card glass-card" id="cardHumidity">
+            <div class="sensor-header">
+              <div class="sensor-icon-wrap icon-humidity">
+                <i class="ri-drop-line"></i>
+              </div>
+              <span class="status-pill pill-success" id="humStatus">Good</span>
+            </div>
+            <div class="sensor-body">
+              <span class="sensor-label">Relative Humidity</span>
+              <div class="sensor-reading">
+                <span class="metric-value" id="valHumidity">65</span>
+                <span class="metric-unit">%</span>
+              </div>
+              <div class="sensor-range-bar">
+                <div class="bar-fill bar-humidity" id="fillHumidity" style="width: 65%;"></div>
+              </div>
+              <div class="range-labels">
+                <span>Target: 55% - 75%</span>
+                <span class="trend stable"><i class="ri-subtract-line"></i> Stable</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Soil Moisture Card -->
+          <div class="sensor-card glass-card" id="cardSoil">
+            <div class="sensor-header">
+              <div class="sensor-icon-wrap icon-soil">
+                <i class="ri-water-flash-line"></i>
+              </div>
+              <span class="status-pill pill-success" id="soilStatus">Moist</span>
+            </div>
+            <div class="sensor-body">
+              <span class="sensor-label">Soil Moisture Content</span>
+              <div class="sensor-reading">
+                <span class="metric-value" id="valSoil">44</span>
+                <span class="metric-unit">%</span>
+              </div>
+              <div class="sensor-range-bar">
+                <div class="bar-fill bar-soil" id="fillSoil" style="width: 44%;"></div>
+              </div>
+              <div class="range-labels">
+                <span>Field Capacity: 40% - 60%</span>
+                <span class="trend down"><i class="ri-arrow-down-s-line"></i> -1.2%</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Sunlight Card -->
+          <div class="sensor-card glass-card" id="cardSun">
+            <div class="sensor-header">
+              <div class="sensor-icon-wrap icon-sun">
+                <i class="ri-sun-line"></i>
+              </div>
+              <span class="status-pill pill-warning" id="sunStatus">High UV</span>
+            </div>
+            <div class="sensor-body">
+              <span class="sensor-label">Solar Radiation / UV</span>
+              <div class="sensor-reading">
+                <span class="metric-value" id="valSun">7.8</span>
+                <span class="metric-unit">UV Index</span>
+              </div>
+              <div class="sensor-range-bar">
+                <div class="bar-fill bar-sun" id="fillSun" style="width: 72%;"></div>
+              </div>
+              <div class="range-labels">
+                <span>Photoperiod: 8.5 hrs today</span>
+                <span class="trend up"><i class="ri-arrow-up-s-line"></i> +0.6</span>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- Overall Health Summary & Quick Insights -->
+        <div class="health-summary-panel glass-card">
+          <div class="health-gauge-box">
+            <div class="circular-progress-wrap">
+              <svg class="progress-ring" width="140" height="140" viewBox="0 0 140 140">
+                <circle class="progress-ring-bg" stroke-width="10" cx="70" cy="70" r="58"></circle>
+                <circle class="progress-ring-circle" id="healthProgressCircle" stroke-width="10" stroke-dasharray="364.4" stroke-dashoffset="36.4" cx="70" cy="70" r="58"></circle>
+              </svg>
+              <div class="progress-text-center">
+                <span class="gauge-value" id="overallScoreVal">91</span>
+                <span class="gauge-unit">Score</span>
+              </div>
+            </div>
+            <div class="gauge-label">
+              <h3>Vigor Score</h3>
+              <p>Overall Biomass Index</p>
+            </div>
+          </div>
+
+          <div class="health-details">
+            <div class="health-status-header">
+              <div class="status-badge-lg status-optimal-badge" id="overallHealthBadge">
+                <i class="ri-heart-pulse-fill"></i> Plant Condition: Healthy & Balanced
+              </div>
+              <span class="risk-pill low-risk" id="riskLevelPill">Fungal Risk: Minimal (12%)</span>
+            </div>
+            <p class="health-summary-text" id="healthSummaryText">
+              All environmental parameters are within standard physiological ranges for the current vegetative stage. Soil conductivity and moisture retention are optimal. No immediate pesticide or irrigation intervention required.
+            </p>
+            <div class="quick-recommendations">
+              <div class="rec-item">
+                <i class="ri-checkbox-circle-fill rec-icon-success"></i>
+                <span><strong>Irrigation:</strong> Next scheduled drip cycle in 3.5 hours.</span>
+              </div>
+              <div class="rec-item">
+                <i class="ri-information-fill rec-icon-info"></i>
+                <span><strong>Ventilation:</strong> Greenhouse airflow adequate (0.8 m/s).</span>
+              </div>
+              <div class="rec-item">
+                <i class="ri-sun-fill rec-icon-warning"></i>
+                <span><strong>Sunlight:</strong> UV peaking; consider shade netting if temp &gt; 30°C.</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- AI Crop Disease Detection Section -->
+    <section class="scanner-section" id="ai-scanner">
+      <div class="container">
+        <div class="section-header">
+          <div class="section-badge"><i class="ri-cpu-line"></i> Leaf Pathology AI</div>
+          <h2 class="section-title">AI Leaf Disease Scanner</h2>
+          <p class="section-subtitle">Upload or select a sample leaf photo to detect foliar diseases, fungal infections, or nutrient deficiencies instantly.</p>
+        </div>
+
+        <div class="scanner-grid">
+          
+          <!-- Upload & Input Zone -->
+          <div class="scanner-upload-card glass-card">
+            
+            <!-- Quick Preset Selector -->
+            <div class="preset-selector-box">
+              <label class="input-label"><i class="ri-magic-line"></i> Or Choose Quick Demo Samples:</label>
+              <div class="sample-chips" id="sampleChips">
+                <button type="button" class="chip active" data-sample="tomato-blight">
+                  <span class="chip-dot blight"></span> Tomato Early Blight
+                </button>
+                <button type="button" class="chip" data-sample="corn-rust">
+                  <span class="chip-dot rust"></span> Corn Common Rust
+                </button>
+                <button type="button" class="chip" data-sample="apple-scab">
+                  <span class="chip-dot scab"></span> Apple Scab
+                </button>
+                <button type="button" class="chip" data-sample="potato-late-blight">
+                  <span class="chip-dot late"></span> Potato Late Blight
+                </button>
+                <button type="button" class="chip" data-sample="healthy-bell-pepper">
+                  <span class="chip-dot healthy"></span> Healthy Pepper Leaf
+                </button>
+              </div>
+            </div>
+
+            <!-- Drop Zone -->
+            <div class="drop-zone" id="dropZone">
+              <input type="file" id="fileInput" accept="image/*" class="file-input" hidden>
+              
+              <!-- Empty state view -->
+              <div class="drop-zone-content" id="dropZoneContent">
+                <div class="upload-icon-circle">
+                  <i class="ri-upload-cloud-2-line"></i>
+                </div>
+                <h3>Drag & Drop Leaf Photo Here</h3>
+                <p>Supports JPG, PNG, WEBP (Max 10MB)</p>
+                <button type="button" class="btn btn-outline-sm" id="browseFileBtn">
+                  <i class="ri-folder-open-line"></i> Browse Files
+                </button>
+              </div>
+
+              <!-- Image Preview View -->
+              <div class="preview-container" id="previewContainer">
+                <img id="previewImage" src="" alt="Selected leaf specimen preview" class="preview-img">
+                <div class="scanner-laser" id="scannerLaser"></div>
+                <button type="button" class="btn-remove-preview" id="removeImgBtn" title="Remove image">
+                  <i class="ri-close-line"></i>
+                </button>
+                <div class="preview-badge" id="previewBadge">Sample Loaded</div>
+              </div>
+            </div>
+
+            <div class="scanner-actions">
+              <button type="button" class="btn btn-primary btn-block" id="analyzeBtn">
+                <i class="ri-scan-2-line" id="analyzeBtnIcon"></i> 
+                <span id="analyzeBtnText">Run AI Disease Analysis</span>
+              </button>
+            </div>
+            
+          </div>
+
+          <!-- Diagnostic Results Card -->
+          <div class="scanner-result-card glass-card" id="resultCard">
+            
+            <div class="result-placeholder" id="resultPlaceholder">
+              <div class="placeholder-icon">
+                <i class="ri-microscope-line"></i>
+              </div>
+              <h3>Ready for Diagnosis</h3>
+              <p>Select a demo specimen or upload a photo, then click <strong>Run AI Disease Analysis</strong> to view the diagnostic report.</p>
+            </div>
+
+            <!-- Active Result Content (Hidden by default or shown on analyze) -->
+            <div class="result-content" id="resultContent" style="display: none;">
+              
+              <div class="result-header">
+                <div class="disease-meta">
+                  <span class="crop-tag" id="resCropName">Tomato (Solanum lycopersicum)</span>
+                  <h3 class="disease-name" id="resDiseaseName">Early Blight</h3>
+                  <span class="pathogen-name" id="resPathogen">Pathogen: <em>Alternaria solani</em></span>
+                </div>
+                <div class="severity-badge-container">
+                  <span class="severity-badge sev-moderate" id="resSeverityBadge">
+                    <i class="ri-alert-line"></i> Moderate Severity
+                  </span>
+                </div>
+              </div>
+
+              <!-- Confidence Meter -->
+              <div class="confidence-box">
+                <div class="confidence-header">
+                  <span>AI Detection Confidence</span>
+                  <strong id="resConfidenceVal">96.8%</strong>
+                </div>
+                <div class="confidence-bar-bg">
+                  <div class="confidence-bar-fill" id="resConfidenceBar" style="width: 96.8%;"></div>
+                </div>
+              </div>
+
+              <!-- Key Symptoms -->
+              <div class="result-section">
+                <h4 class="section-subheading"><i class="ri-stethoscope-line"></i> Identified Symptoms</h4>
+                <p class="result-text" id="resSymptoms">
+                  Concentric dark rings (target-like spots) with surrounding yellow chlorotic halos on lower mature foliage. Early stem lesions detected.
+                </p>
+              </div>
+
+              <!-- Treatment & Action Plan -->
+              <div class="result-section">
+                <h4 class="section-subheading"><i class="ri-shield-cross-line"></i> Recommended Treatment & Action</h4>
+                <div class="treatment-grid" id="resTreatments">
+                  <div class="treatment-card organic">
+                    <div class="treatment-title"><i class="ri-plant-line"></i> Organic & Cultural Care</div>
+                    <ul id="resOrganicList">
+                      <li>Prune lower infected foliage and dispose safely off-site.</li>
+                      <li>Apply copper-based bio-fungicide or Bacillus subtilis spray.</li>
+                      <li>Avoid overhead sprinkler watering; keep leaves dry.</li>
+                    </ul>
+                  </div>
+                  <div class="treatment-card chemical">
+                    <div class="treatment-title"><i class="ri-flask-line"></i> Targeted Intervention</div>
+                    <ul id="resChemicalList">
+                      <li>Apply Chlorothalonil or Mancozeb preventative spray at 7-10 day intervals.</li>
+                      <li>Rotate fungicide classes (FRAC group 7 & 11) to mitigate resistance.</li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Action Buttons -->
+              <div class="result-footer-actions">
+                <button class="btn btn-outline-sm" id="saveLogBtn">
+                  <i class="ri-bookmark-line"></i> Save to Scan History
+                </button>
+                <button class="btn btn-ghost-sm" id="printReportBtn">
+                  <i class="ri-printer-line"></i> Print Summary
+                </button>
+              </div>
+
+            </div>
+
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- Analytics & Trend Charts Section -->
+    <section class="charts-section" id="charts-section">
+      <div class="container">
+        <div class="section-header">
+          <div class="section-badge"><i class="ri-bar-chart-grouped-line"></i> Telemetry Analytics</div>
+          <h2 class="section-title">Microclimate & Health Trends</h2>
+          <p class="section-subtitle">24-hour environmental trend logging and daily crop health progression curve.</p>
+          
+          <div class="chart-filter-pills">
+            <button type="button" class="chart-pill active" data-range="24h">24 Hours</button>
+            <button type="button" class="chart-pill" data-range="7d">Past 7 Days</button>
+            <button type="button" class="chart-pill" data-range="30d">Past 30 Days</button>
+          </div>
+        </div>
+
+        <div class="charts-grid">
+          
+          <!-- Chart 1: Microclimate Multi-axis -->
+          <div class="chart-card glass-card">
+            <div class="chart-card-header">
+              <div>
+                <h3 class="chart-card-title">Temperature & Soil Moisture</h3>
+                <p class="chart-card-sub">Dual-axis correlation telemetry</p>
+              </div>
+              <div class="chart-legend-custom">
+                <span class="leg-item"><span class="leg-dot dot-temp"></span> Temp (°C)</span>
+                <span class="leg-item"><span class="leg-dot dot-soil"></span> Moisture (%)</span>
+              </div>
+            </div>
+            <div class="chart-wrapper">
+              <canvas id="climateChart"></canvas>
+            </div>
+          </div>
+
+          <!-- Chart 2: Health Index Progression -->
+          <div class="chart-card glass-card">
+            <div class="chart-card-header">
+              <div>
+                <h3 class="chart-card-title">Health Score & Disease Risk</h3>
+                <p class="chart-card-sub">Crop vitality and pathogen pressure index</p>
+              </div>
+              <div class="chart-legend-custom">
+                <span class="leg-item"><span class="leg-dot dot-health"></span> Health Index</span>
+                <span class="leg-item"><span class="leg-dot dot-risk"></span> Fungal Risk</span>
+              </div>
+            </div>
+            <div class="chart-wrapper">
+              <canvas id="healthChart"></canvas>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- Health History & Diagnosis Table Section -->
+    <section class="history-section" id="history-section">
+      <div class="container">
+        <div class="section-header">
+          <div class="section-badge"><i class="ri-history-line"></i> Audit Trail</div>
+          <h2 class="section-title">Diagnostic History Log</h2>
+          <p class="section-subtitle">Complete record of recent field inspections, detected pathologies, and resolution status.</p>
+        </div>
+
+        <div class="table-card glass-card">
+          <!-- Table Toolbar -->
+          <div class="table-toolbar">
+            <div class="search-input-wrap">
+              <i class="ri-search-line search-icon"></i>
+              <input type="text" id="tableSearchInput" placeholder="Search crop, disease, or plot ID..." class="search-input">
+            </div>
+
+            <div class="filter-dropdown-wrap">
+              <select id="statusFilterSelect" class="filter-select">
+                <option value="all">All Conditions</option>
+                <option value="Healthy">Healthy Only</option>
+                <option value="Moderate">Moderate Alert</option>
+                <option value="Severe">Severe / Critical</option>
+                <option value="Mild">Mild Infection</option>
+              </select>
+              <button class="btn btn-outline-sm" id="exportHistoryBtn">
+                <i class="ri-download-2-line"></i> Export CSV
+              </button>
+            </div>
+          </div>
+
+          <!-- Responsive Table -->
+          <div class="table-responsive">
+            <table class="history-table" id="historyTable">
+              <thead>
+                <tr>
+                  <th>Timestamp</th>
+                  <th>Plot / Specimen</th>
+                  <th>Diagnosed Condition</th>
+                  <th>Severity</th>
+                  <th>Confidence</th>
+                  <th>Status</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+              <tbody id="historyTableBody">
+                <!-- Dynamically populated via JS -->
+              </tbody>
+            </table>
+          </div>
+
+          <!-- Empty search feedback -->
+          <div class="table-empty-state" id="tableEmptyState" style="display: none;">
+            <i class="ri-file-search-line"></i>
+            <p>No matching diagnostic records found for your search criteria.</p>
+          </div>
+
+          <div class="table-footer">
+            <span class="table-count-text" id="tableCountText">Showing 5 of 5 logs</span>
+            <button class="btn-link" id="clearDemoHistoryBtn"><i class="ri-refresh-line"></i> Reset Demo Data</button>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- Agronomy Quick Care Tips Section -->
+    <section class="tips-section">
+      <div class="container">
+        <div class="section-header">
+          <div class="section-badge"><i class="ri-book-read-line"></i> Best Practices</div>
+          <h2 class="section-title">Plant Health & Disease Prevention Guide</h2>
+          <p class="section-subtitle">Key agronomic guidelines to maximize crop resilience against common foliar pathogens.</p>
+        </div>
+
+        <div class="tips-grid">
+          <div class="tip-card glass-card">
+            <div class="tip-icon"><i class="ri-drop-fill"></i></div>
+            <h3>Smart Drip Irrigation</h3>
+            <p>Water roots directly rather than overhead foliage. Fungal spores (like *Phytophthora* and *Alternaria*) require 4-6 hours of continuous leaf wetness to germinate.</p>
+          </div>
+          
+          <div class="tip-card glass-card">
+            <div class="tip-icon"><i class="ri-windy-line"></i></div>
+            <h3>Airflow & Canopy Spacing</h3>
+            <p>Maintain recommended row spacing and prune lower sucker leaves to enhance air circulation and lower localized microclimate humidity below 70%.</p>
+          </div>
+
+          <div class="tip-card glass-card">
+            <div class="tip-icon"><i class="ri-seedling-line"></i></div>
+            <h3>Soil Nutrient Balance</h3>
+            <p>Avoid excessive Nitrogen which promotes lush, soft foliage susceptible to rust and powdery mildew. Balance with Potassium (K) and Calcium (Ca) for tough cell walls.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Inspection Modal Details Popup -->
+  <div class="modal-overlay" id="detailModal" aria-hidden="true">
+    <div class="modal-card glass-card">
+      <div class="modal-header">
+        <h3 id="modalTitle">Diagnostic Detail</h3>
+        <button class="modal-close" id="modalCloseBtn"><i class="ri-close-line"></i></button>
+      </div>
+      <div class="modal-body" id="modalBody">
+        <!-- Content inserted dynamically -->
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-secondary btn-sm" id="modalOkBtn">Close</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast Notification Container -->
+  <div class="toast-container" id="toastContainer"></div>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container footer-container">
+      <div class="footer-brand">
+        <div class="logo">
+          <div class="logo-icon"><i class="ri-leaf-fill"></i></div>
+          <div class="logo-text">
+            <span class="brand-name">Agri<span class="brand-highlight">Pulse</span></span>
+            <span class="brand-sub">Smart Crop Monitor</span>
+          </div>
+        </div>
+        <p class="footer-desc">
+          Frontend portfolio project built with HTML5, Vanilla CSS3, and JavaScript ES6. Designed for modern precision agriculture & plant pathology monitoring.
+        </p>
+      </div>
+
+      <div class="footer-links">
+        <h4>Navigation</h4>
+        <ul>
+          <li><a href="#home">Home</a></li>
+          <li><a href="#dashboard">Sensor Dashboard</a></li>
+          <li><a href="#ai-scanner">Leaf Disease Scanner</a></li>
+          <li><a href="#charts-section">Telemetry Charts</a></li>
+          <li><a href="#history-section">Diagnostic Log</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-tech">
+        <h4>Core Technologies</h4>
+        <div class="tech-tags">
+          <span class="tech-tag"><i class="ri-html5-fill"></i> HTML5</span>
+          <span class="tech-tag"><i class="ri-css3-fill"></i> CSS3 Glassmorphism</span>
+          <span class="tech-tag"><i class="ri-javascript-fill"></i> Vanilla JS (ES6+)</span>
+          <span class="tech-tag"><i class="ri-line-chart-fill"></i> Chart.js</span>
+          <span class="tech-tag"><i class="ri-smartphone-line"></i> Fully Responsive</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <div class="container bottom-content">
+        <p>&copy; 2026 AgriPulse &bull; Smart Crop Disease & Plant Health Monitor. Portfolio Project.</p>
+        <div class="bottom-links">
+          <a href="#home"><i class="ri-arrow-up-line"></i> Back to Top</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Script File -->
+  <script src="script.js"></script>
+</body>
+</html>
